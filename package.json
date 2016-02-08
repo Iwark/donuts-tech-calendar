@@ -1,0 +1,22 @@
+{
+  "name": "donuts-tech-calendar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iwark/donuts-tech-calendar.git"
+  },
+  "author": "Iwark <iwasaki.kohei@donuts.ne.jp>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Iwark/donuts-tech-calendar/issues"
+  },
+  "homepage": "https://github.com/Iwark/donuts-tech-calendar#readme",
+  "devDependencies": {
+    "webpack": "^1.12.13"
+  }
+}
