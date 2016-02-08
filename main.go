@@ -66,6 +66,7 @@ func main() {
 
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
+	p.Add("GET", "/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
 	p.Add("GET", "/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	p.Add("GET", "/login", &templateHandler{filename: "login.html"})
 	p.Get("/auth/{action}/{provider}", loginHandler)

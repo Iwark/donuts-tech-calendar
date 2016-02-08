@@ -1,5 +1,4 @@
 config/*.env
 dtc
 node_modules/
-assets/css
-assets/js
+public/**/
