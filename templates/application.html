@@ -1,0 +1,21 @@
+{{define "application"}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Donuts Tech Calendar | {{template "title" .}}</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <style>
+      input{ display: block; }
+      ul{ list-style: none; }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+        {{template "body" .}}
+    </div>
+  </body>
+
+</html>
+{{end}}

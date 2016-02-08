@@ -1,53 +1,48 @@
-<html>
-  <head>
-    <title>chat</title>
-    <style>
-      input{ display: block; }
-      ul{ list-style: none; }
-    </style>
-  </head>
-  <body>
-    <ul id="messages"></ul>
-    WebSocketを使ったチャットアプリ
-    <form id="chatbox">
-      {{.Name}}:<br />
-      <textarea></textarea>
-      <input type="submit" value="送信" />
-    </form>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
-      $(function(){
-        var socket = null;
-        var $msgBox = $("#chatbox textarea");
-        var $messages = $("#messages");
-        $('#chatbox').submit(function(){
-          if(!$msgBox.val()) return false;
-          if(!socket){
-            alert("エラー: WebSocket接続が行われていません。");
-            return false;
-          }
-          socket.send(JSON.stringify({"Message" : $msgBox.val()}));
-          $msgBox.val("");
+{{define "title"}}
+  チャット
+{{end}}
+
+{{define "body"}}
+  <ul id="messages"></ul>
+  WebSocketを使ったチャットアプリ
+  <form id="chatbox">
+    {{.Name}}:<br />
+    <textarea></textarea>
+    <input type="submit" value="送信" />
+  </form>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>
+    $(function(){
+      var socket = null;
+      var $msgBox = $("#chatbox textarea");
+      var $messages = $("#messages");
+      $('#chatbox').submit(function(){
+        if(!$msgBox.val()) return false;
+        if(!socket){
+          alert("エラー: WebSocket接続が行われていません。");
           return false;
-        });
-        if(!window["WebSocket"]){
-          alert("エラー: WebSocketに対応していないブラウザです。")
-        } else {
-          socket = new WebSocket("ws://{{.Host}}/room");
-          socket.onclose = function() {
-            console.log("接続が終了しました。");
-          }
-          socket.onmessage = function(e){
-            var msg = JSON.parse(e.data)
-            $messages.append(
-              $("<li>").append(
-                $("<strong>").text(msg.Name + ": "),
-                $("<span>").text(msg.Message)
-              )
-            );
-          }
         }
+        socket.send(JSON.stringify({"Message" : $msgBox.val()}));
+        $msgBox.val("");
+        return false;
       });
-    </script>
-  </body>
-</html>
+      if(!window["WebSocket"]){
+        alert("エラー: WebSocketに対応していないブラウザです。")
+      } else {
+        socket = new WebSocket("ws://{{.Host}}/room");
+        socket.onclose = function() {
+          console.log("接続が終了しました。");
+        }
+        socket.onmessage = function(e){
+          var msg = JSON.parse(e.data)
+          $messages.append(
+            $("<li>").append(
+              $("<strong>").text(msg.Name + ": "),
+              $("<span>").text(msg.Message)
+            )
+          );
+        }
+      }
+    });
+  </script>
+{{end}}
