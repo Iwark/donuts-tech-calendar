@@ -5,7 +5,7 @@ module.exports = {
     __dirname + '/../app/assets/stylesheets/main.scss',
   ],
   output: {
-    path: __dirname + '/../../assets/',
+    path: __dirname + '/../../assets/css/',
     filename: "app.css"
   },
   resolve: {
@@ -27,8 +27,7 @@ module.exports = {
       loader: ExtractTextPlugin.extract("style", "css!sass")
     }]
   },
-
   plugins: [
-    new ExtractTextPlugin("css/app.css")
+    new ExtractTextPlugin("app.css")
   ]
 };
