@@ -26,7 +26,7 @@ type templateHandler struct {
 
 func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
-		t.tpl = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
+		t.tpl = template.Must(template.ParseFiles("templates/application.html", filepath.Join("templates", t.filename)))
 	})
 	data := map[string]interface{}{
 		"Host": r.Host,
@@ -39,7 +39,7 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		data["Name"] = string(name)
 	}
-	if err := t.tpl.Execute(w, data); err != nil {
+	if err := t.tpl.ExecuteTemplate(w, "application", data); err != nil {
 		log.Fatal("TemplateExecute:", err)
 	}
 }
