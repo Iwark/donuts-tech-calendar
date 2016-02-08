@@ -1,33 +1,29 @@
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var entryBasePath = __dirname + '/../app/assets/';
+var outputBasePath = __dirname + '/../../assets/';
+
 module.exports = {
   devtool: "source-map",
-  entry: [
-    __dirname + '/../app/assets/stylesheets/app.scss',
-  ],
+  entry: {
+    js : entryBasePath + 'javascripts/app.js',
+    app : entryBasePath + 'stylesheets/app.scss',
+  },
   output: {
-    path: __dirname + '/../../assets/css/',
-    filename: "app.css"
+    path: outputBasePath,
+    filename: "js/app.js"
   },
   resolve: {
     extensions: ['', '.js', '.css']
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: "babel",
-      query: {
-        presets: ["es2015"]
-      }
-    }, {
-      test: /\.css$/,
-      loader: ExtractTextPlugin.extract("style", "css")
-    }, {
-      test: /\.scss$/,
-      loader: ExtractTextPlugin.extract("style", "css!sass")
-    }]
+    loaders: [
+      { 
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract("style", "css!sass")
+      },
+    ]
   },
   plugins: [
-    new ExtractTextPlugin("app.css")
+    new ExtractTextPlugin("css/[name].css")
   ]
 };
