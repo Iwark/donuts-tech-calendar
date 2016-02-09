@@ -1,0 +1,31 @@
+.room{
+  padding-top: 20px;
+  ul.messages{
+    li.message{
+      position: relative;
+      height: 140px;
+      overflow: hidden;
+      .user-box{
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .message{
+        position: absolute;
+        top: 5px;
+        left: 125px;
+        right: 20px;
+        height: 80px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #777;
+      }
+      .created{
+        position: absolute;
+        top: 90px;
+        right: 20px;
+        font-size: 11px;
+      }
+    }
+  }
+}

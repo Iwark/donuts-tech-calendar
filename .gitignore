@@ -2,3 +2,4 @@ config/*.env
 dtc
 node_modules/
 public/**/
+npm-debug.log
