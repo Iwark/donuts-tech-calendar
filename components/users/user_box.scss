@@ -2,12 +2,14 @@
   width: 120px;
   text-align: center;
   img.user-thumbnail{
-    width: 92px;
+    width: 65px;
     border-radius: 46px;
-    border: 1px solid #777;
+    border: 1px solid #cdcecf;
   }
   .name{
     margin-top: 5px;
     font-size: 12px;
+    color: #3b5998;
+    font-weight: bold;
   }
 }

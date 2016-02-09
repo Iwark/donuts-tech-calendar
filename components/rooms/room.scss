@@ -1,5 +1,7 @@
 .room{
+  width: 800px;
   padding-top: 20px;
+  margin-bottom: 90px;
   ul.messages{
     li.message{
       position: relative;
@@ -15,16 +17,19 @@
         top: 5px;
         left: 125px;
         right: 20px;
-        height: 80px;
+        min-height: 80px;
         padding: 10px;
+        border: 1px solid #cdcecf;
         border-radius: 8px;
-        border: 1px solid #777;
+        background-color: #f6f7f8;
+        word-break: break-word;
       }
       .created{
         position: absolute;
         top: 90px;
-        right: 20px;
+        right: 30px;
         font-size: 11px;
+        color: #3b5998;
       }
     }
   }

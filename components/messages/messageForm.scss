@@ -1,0 +1,33 @@
+.message-area {
+  position: fixed;
+  bottom: 15px;
+  width: 800px;
+  padding: 10px;
+  //border: 2px solid #cdcecf;
+  //border-radius: 9px;
+  form.message-form {
+    width: 685px;
+    textarea {
+      padding-left: 50px;
+      margin-left: 40px;
+      resize: none;
+    }
+    img.stamp {
+      position: absolute; 
+      top: 0;
+      bottom: 0;
+      left: 60px;
+      width: 30px;
+      margin: auto;
+      cursor: pointer;
+    }
+  }
+  input.submit-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10px;
+    height: 35px;
+    margin: auto;
+  }
+}

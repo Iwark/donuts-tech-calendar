@@ -32,23 +32,24 @@ class Room extends React.Component {
     var msg = JSON.parse(e.data)
     this.messages.push({text: msg.Message, created: "10:02", user: { name: msg.Name, thumbnail: "https://avatars2.githubusercontent.com/u/3723159?v=3&s=460" }})
     this.forceUpdate()
+    window.scrollTo(0, document.body.scrollHeight)
   }
 
   render() {
     return (
       <div className='room'>
-      <ul className='messages'>
-      {this.messages.map((message) => {
-        return (
-          <li className='message'>
-          <UserBox user={message.user}/>
-          <div className='message'>{message.text}</div>
-          <div className='created'>{message.created}</div>
-          </li>
-          )
-      })}
-      </ul>
-      <MessageForm socket={this.socket} />
+        <ul className='messages'>
+          {this.messages.map((message) => {
+            return (
+              <li className='message'>
+                <UserBox user={message.user}/>
+                <div className='message'>{message.text}</div>
+                <div className='created'>{message.created}</div>
+              </li>
+              )
+          })}
+        </ul>
+        <MessageForm socket={this.socket} />
       </div>
     )
   }
