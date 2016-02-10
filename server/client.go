@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -22,9 +23,14 @@ func (c *client) read() {
 	for {
 		var msg *message
 		if err := c.socket.ReadJSON(&msg); err == nil {
-			msg.When = time.Now()
-			msg.Name = c.userName
-			c.room.forward <- msg
+			user, err := FindUser(c.userName)
+			if err != nil {
+				log.Fatal(err)
+			} else {
+				msg.User = user
+				msg.When = time.Now()
+				c.room.forward <- msg
+			}
 		} else {
 			break
 		}

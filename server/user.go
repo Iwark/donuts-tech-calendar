@@ -25,6 +25,25 @@ type User struct {
 	AvatarURL string `mapstructure:"avatar_url" bson:"avatar_url"`
 }
 
+func FindUser(name string) (*User, error) {
+	session, err := mgo.Dial("mongodb://localhost")
+	if err != nil {
+		return nil, err
+	}
+	defer session.Close()
+
+	session.SetMode(mgo.Monotonic, true)
+	c := session.DB("donuts_tech_calendar").C("users")
+
+	user := User{}
+
+	err = c.Find(bson.M{"user_name": name}).One(&user)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
 func (u *User) FindOrCreate(c *mgo.Collection) error {
 
 	existsUser := User{}

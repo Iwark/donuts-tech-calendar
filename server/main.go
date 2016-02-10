@@ -11,6 +11,7 @@ import (
 	"sync"
 	"text/template"
 
+	"github.com/Iwark/godaemon"
 	"github.com/Iwark/trace"
 	"github.com/gorilla/pat"
 	"github.com/joho/godotenv"
@@ -45,8 +46,10 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 var (
-	env  = flag.String("env", "development", "環境")
-	addr = flag.String("addr", ":8080", "アプリケーションのアドレス")
+	env     = flag.String("env", "development", "環境")
+	addr    = flag.String("addr", ":8080", "アプリケーションのアドレス")
+	child   = flag.Bool("child", false, "Run as a child process")
+	logfile = flag.String("l", "logfile.log", "log file")
 )
 
 func main() {
@@ -56,6 +59,20 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 		return
+	}
+
+	if *env == "production" {
+		if err := godaemon.Start(*child); err != nil {
+			log.Fatal(err)
+			return
+		}
+		f, err := godaemon.OutputFile(*logfile)
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
+		defer f.Close()
+		log.SetOutput(f)
 	}
 
 	goth.UseProviders(

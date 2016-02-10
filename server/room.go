@@ -45,7 +45,11 @@ func (r *room) run() {
 			close(client.send)
 			r.tracer.Trace("クライアントが退室しました")
 		case msg := <-r.forward:
-			r.tracer.Trace("メッセージを受信しました: ", msg.Message, msg.Name, msg.When)
+			if msg.Type == "stamp" {
+				r.tracer.Trace("スタンプを受信しました: ", msg.User.UserName, msg.When)
+			} else {
+				r.tracer.Trace("メッセージを受信しました: ", msg.Message, msg.User.UserName, msg.When)
+			}
 			// すべてのクライアントにメッセージを転送
 			for client := range r.clients {
 				select {

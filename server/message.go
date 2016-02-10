@@ -4,7 +4,8 @@ import "time"
 
 // message represents a single message
 type message struct {
-	Name    string
+	Type    string // "message", "stamp"
+	User    *User
 	Message string
 	When    time.Time
 }

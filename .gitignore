@@ -1,5 +1,6 @@
 config/*.env
 dtc
+dtc_prod
 node_modules/
 public/**/
 npm-debug.log
