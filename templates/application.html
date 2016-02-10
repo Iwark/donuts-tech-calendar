@@ -9,7 +9,8 @@
   </head>
 
   <body>
-    <div class="container">
+    <div id="container" data-host="{{.Host}}" >
+      
       {{template "body" .}}
     </div>
     <script type="text/javascript" src="public/js/app.js"></script>

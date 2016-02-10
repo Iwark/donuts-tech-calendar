@@ -69,7 +69,7 @@ func main() {
 	p.Add("GET", "/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
 	p.Add("GET", "/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	p.Add("GET", "/login", &templateHandler{filename: "login.html"})
-	p.Add("GET", "/", &templateHandler{filename: "index.html"})
+	p.Add("GET", "/index", &templateHandler{filename: "index.html"})
 	p.Get("/auth/{action}/{provider}", loginHandler)
 	p.Add("GET", "/room", r)
 

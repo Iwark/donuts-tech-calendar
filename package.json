@@ -33,7 +33,9 @@
   },
   "dependencies": {
     "babel-preset-react": "^6.5.0",
+    "history": "^2.0.0",
     "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react-dom": "^0.14.7",
+    "react-router": "^1.0.3"
   }
 }
