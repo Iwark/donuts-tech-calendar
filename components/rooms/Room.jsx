@@ -9,11 +9,13 @@ class Room extends React.Component {
   constructor(props) {
     super(props)
 
+    this.host = document.getElementById("container").getAttribute('data-host')
+
     if(!window["WebSocket"]) {
       alert("エラー: WebSocketに対応していないブラウザです。")
       return
     }
-    this.socket = new WebSocket(`ws://${this.props.host}/room`);
+    this.socket = new WebSocket(`ws://${this.host}/room`);
     this.socket.onclose = () => this.onSocketClose()
     this.socket.onmessage = (e) => this.onSocketData(e)
 
@@ -32,23 +34,24 @@ class Room extends React.Component {
     var msg = JSON.parse(e.data)
     this.messages.push({text: msg.Message, created: "10:02", user: { name: msg.Name, thumbnail: "https://avatars2.githubusercontent.com/u/3723159?v=3&s=460" }})
     this.forceUpdate()
+    window.scrollTo(0, document.body.scrollHeight)
   }
 
   render() {
     return (
       <div className='room'>
-      <ul className='messages'>
-      {this.messages.map((message) => {
-        return (
-          <li className='message'>
-          <UserBox user={message.user}/>
-          <div className='message'>{message.text}</div>
-          <div className='created'>{message.created}</div>
-          </li>
-          )
-      })}
-      </ul>
-      <MessageForm socket={this.socket} />
+        <ul className='messages'>
+          {this.messages.map((message) => {
+            return (
+              <li className='message'>
+                <UserBox user={message.user}/>
+                <div className='message'>{message.text}</div>
+                <div className='created'>{message.created}</div>
+              </li>
+              )
+          })}
+        </ul>
+        <MessageForm socket={this.socket} />
       </div>
     )
   }

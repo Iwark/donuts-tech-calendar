@@ -1,0 +1,49 @@
+ul.room-list {
+  padding: 15px;
+  li.room {
+    position: relative;
+    width: 200px;
+    height: 225px;
+    padding: 0;
+    border: 1px solid #ddd;
+    border-radius: 1px;
+    background-color: white;
+    box-shadow:rgba(113, 135, 164, 0.0980392) 0px 0px 6px 3px;
+
+    h2.room-name {
+      height: 40px;
+      padding: 10px;
+      line-height: 20px;
+      background-color: #43A047;
+      color: white;
+      border-radius: 2px;
+    }
+
+    .date {
+      font-size: 12px;
+      color: #cfcecf;
+      text-align: right;
+      margin: 10px;
+    }
+
+    img.icon {
+      height: 80px;
+      margin: 10px auto 0;
+      display: block;
+    }
+
+    .join-btn {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: 0 30px 10px;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #43A047;
+      border-radius: 3px;
+      color: #43A047;
+      cursor: pointer;
+    }
+  }
+}
