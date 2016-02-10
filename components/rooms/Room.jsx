@@ -9,11 +9,13 @@ class Room extends React.Component {
   constructor(props) {
     super(props)
 
+    this.host = document.getElementById("container").getAttribute('data-host')
+
     if(!window["WebSocket"]) {
       alert("エラー: WebSocketに対応していないブラウザです。")
       return
     }
-    this.socket = new WebSocket(`ws://${this.props.host}/room`);
+    this.socket = new WebSocket(`ws://${this.host}/room`);
     this.socket.onclose = () => this.onSocketClose()
     this.socket.onmessage = (e) => this.onSocketData(e)
 

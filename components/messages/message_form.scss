@@ -6,13 +6,15 @@
   //border: 2px solid #cdcecf;
   //border-radius: 9px;
   form.message-form {
-    width: 685px;
+    position: relative;
+    width: 800px;
     textarea {
+      width: 680px;
       padding-left: 50px;
       margin-left: 40px;
       resize: none;
     }
-    img.stamp {
+    img.stamp-btn {
       position: absolute; 
       top: 0;
       bottom: 0;
@@ -24,10 +26,29 @@
   }
   input.submit-btn {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    bottom: 25px;
     right: 10px;
     height: 35px;
     margin: auto;
+  }
+}
+
+.stamp-area {
+  display: none;
+  width: 680px;
+  margin-left: 40px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-top: none;
+  &.active {
+    display: block;
+  }
+  &.inactive {
+    display: none;
+  }
+  .stamp {
+    height: 50px;
+    margin: 0 10px;
+    cursor: pointer;
   }
 }

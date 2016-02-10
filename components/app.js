@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from "react-dom";
+import ReactDOM from "react-dom";
 
 import { Router, Route, IndexRoute, Link } from 'react-router';
 
@@ -10,7 +10,7 @@ import Room from "./rooms/Room";
 import RoomList from "./rooms/RoomList";
 import Login from "./users/Login";
 
-const App = React.createClass({
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -28,24 +28,14 @@ const App = React.createClass({
       </div>
     )
   }
-})
+}
 
-var wrapComponent = function(Component, props) {
-  return React.createClass({
-    render: function() {
-      return React.createElement(Component, props);
-    }
-  });
-};
-
-let container = document.getElementById("container")
-
-render((
+ReactDOM.render((
   <Router>
     <Route path="/" component={App}>
       <IndexRoute component={RoomList} />
       <Route path= "login" component={Login} />
-      <Route path="chat" component={wrapComponent(Room, {host: container.getAttribute('data-host')})}/>   
+      <Route path="chat" component={Room}/>   
     </Route>
   </Router>
-), container)
+), document.getElementById("container"))
