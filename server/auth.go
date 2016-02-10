@@ -6,7 +6,10 @@ import (
 	"log"
 	"net/http"
 
+	"gopkg.in/mgo.v2"
+
 	"github.com/markbates/goth/gothic"
+	"github.com/mitchellh/mapstructure"
 )
 
 type authHandler struct {
@@ -35,30 +38,52 @@ func MustAuth(handler http.Handler) http.Handler {
 // パスの形式: /auth/{action}/{provider}
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	action := r.URL.Query().Get(":action")
-	provider := r.URL.Query().Get(":provider")
+	// provider := r.URL.Query().Get(":provider")
 
 	switch action {
 	case "login":
 		gothic.BeginAuthHandler(w, r)
-		log.Println("TODO: ログイン処理", provider)
 	case "callback":
 		// print our state string to the console. Ideally, you should verify
 		// that it's the same string as the one you set in `setState`
 		fmt.Println("State: ", gothic.GetState(r))
 
-		user, err := gothic.CompleteUserAuth(w, r)
+		githubUser, err := gothic.CompleteUserAuth(w, r)
 		if err != nil {
 			log.Fatal("CompleteUserAuth error: ", err)
 			return
 		}
 
-		authCookieValue := base64.StdEncoding.EncodeToString([]byte(user.Name))
+		// ユーザーの保存
+		var user User
+		err = mapstructure.Decode(githubUser.RawData, &user)
+		if err != nil {
+			log.Fatal("mapstructure error: ", err)
+			return
+		}
+
+		session, err := mgo.Dial("mongodb://localhost")
+		if err != nil {
+			log.Fatal("mgo database dial error:", err)
+			return
+		}
+		defer session.Close()
+
+		session.SetMode(mgo.Monotonic, true)
+		c := session.DB("donuts_tech_calendar").C("users")
+		err = user.FindOrCreate(c)
+		if err != nil {
+			log.Fatal("user.FindOrCreate error:", err)
+			return
+		}
+
+		authCookieValue := base64.StdEncoding.EncodeToString([]byte(user.UserName))
 		http.SetCookie(w, &http.Cookie{
 			Name:  "auth",
 			Value: authCookieValue,
 			Path:  "/",
 		})
-		fmt.Println(user)
+
 		w.Header().Set("Location", "/chat")
 		w.WriteHeader(http.StatusTemporaryRedirect)
 	default:
