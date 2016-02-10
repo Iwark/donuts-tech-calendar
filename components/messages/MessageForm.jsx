@@ -7,11 +7,12 @@ class MessageForm extends React.Component {
   constructor(props) {
     super(props)
     this.stampIsActive = true;
-    this.cursorPos = 1;
+    this.cursorPos = 2;
   }
 
   onKeyDown(e) {
-   
+    
+
     // Enterを押した時
     if (e.keyCode == 13) {
       // シフトキーが押されている場合
@@ -21,7 +22,18 @@ class MessageForm extends React.Component {
         e.preventDefault()
         this.refs.btn.click();
       }
+    }  
+  }
+
+  onChange() {
+    var currentCursor = this.refs.message.value.split('\n').length;
+   
+    if (this.cursorPos > currentCursor) {
+      if (this.refs.message.rows > 2) {
+        this.refs.message.rows -= 1;
+      }
     }
+    this.cursorPos = currentCursor;
   }
 
   onSubmit(e) {
@@ -33,6 +45,7 @@ class MessageForm extends React.Component {
     }));
     this.refs.message.value = '';
     this.refs.message.rows  = 2;
+    this.cursorPos = 2;
     this.forceUpdate()
   }
 
@@ -51,7 +64,11 @@ class MessageForm extends React.Component {
 
         <div className="message-area">
           <form className="message-form" onSubmit={(e) => this.onSubmit(e)}>
-            <textarea className="form-control" ref="message" onKeyDown={(e) => this.onKeyDown(e)}/>
+            <textarea 
+              className="form-control" 
+              ref="message" 
+              onKeyDown={(e) => this.onKeyDown(e)}
+              onChange={() => this.onChange()} />
             <img className="stamp-btn" src={require('./stamp-btn.png')} onClick={() => this.onStampClick()}/>
             <input className="submit-btn" ref="btn" type="submit" value="送信" />
           </form>
