@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"path/filepath"
 	"sync"
 	"text/template"
@@ -51,6 +52,12 @@ var (
 
 func main() {
 	flag.Parse()
+
+	// 本番環境実行時はバイナリのあるディレクトリへと移動する
+	if *env == "production" {
+		dir := path.Dir(os.Args[0])
+		os.Chdir(dir)
+	}
 
 	err := godotenv.Load(fmt.Sprintf("config/%s.env", *env))
 	if err != nil {
