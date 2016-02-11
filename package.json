@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "go build -o dtc server/*.go && webpack && ./dtc",
-    "deploy": "GOOS=linux GOARCH=amd64 go build -o dtc_prod server/*.go && webpack && scp -r {components config public templates dtc_prod} donuts-tech-calendar:/home/ec2-user/donuts-tech-calendar/"
+    "deploy": "GOOS=linux GOARCH=amd64 go build -o dtc_prod server/*.go && webpack && scp -r components config public templates dtc_prod donuts-tech-calendar:/home/ec2-user/donuts-tech-calendar/"
   },
   "repository": {
     "type": "git",
